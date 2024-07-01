@@ -7,24 +7,31 @@ use Illuminate\Http\Request;
 class ControllerSoal1 extends Controller
 {
     function main(){
-        $string = 'abcdeFghijkLmnopqRstuvwXabcdeFghijkLmnopqRstuvwXabcdeFghijkLmnopqRstuvwX';
+        $loopingIndex = 'abcdeFghijkLmnopqRstuvwXabcdeFghijkLmnopqRstuvwXabcdeFghijkLmnopqRstuvwX';
         $targetIndex = 1562231;
 
         // Hitung panjang string asli
-        $originalLength = strlen($string);
+        $originalLength = strlen($loopingIndex);
 
-        // Hitung berapa kali string perlu diulang untuk mencapai atau melebihi target index
-        $repeatCount = ceil($targetIndex / $originalLength);
+        // Hitung sisa perulangan
+        $count = $targetIndex % $originalLength;
 
-        // Buat string yang diulang
-        $repeatedString = str_repeat($string, $repeatCount);
+        // ambil karakter dari looping index berdasarkan sisa perulangan
+        $result = $loopingIndex[$count]; 
 
-        // Tentukan nilai karakter pada index yang diinginkan
-        if ($targetIndex <= strlen($repeatedString)) {
-            $character = $repeatedString[$targetIndex - 1]; // -1 karena index PHP dimulai dari 0
-            return response()->json(['character' => $character]);
-        } else {
-            return response()->json(['error' => 'Index out of range']);
+        // bila sisa perlulangan jumlahnya keliapatan 6 maka buat menjadi huruf besar
+        if($count % 6 == 0){
+            $result = strtoupper($result);
         }
+
+        return response()->json([
+            'result' => $result
+        ]);
+
+
+
+        
+
+        
     }
 }
